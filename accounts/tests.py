@@ -20,26 +20,24 @@ class HomePageTests(TestCase):
         self.assertTemplateUsed(response, 'home.html')
         self.assertTemplateNotUsed(response, 'login.html')
 
-    # up to here
-
     def test_home_page_display_when_user_signed_in(self):
-
-        # this login section does not work
-        testuser = get_user_model().objects.create_user(
-            username='testuser',
-            email='testuser@email.com',
-            first_name='Test',
-            last_name='User',
-            position='Tester',
-            password='shikamaru'
+        # Create user and sign in
+        self.user = get_user_model().objects.create_user(
+            username='johnlennon',
+            email='john@lennon.com',
+            password='shikamaru',
+            position='songwriter'
         )
-        self.client.force_login(testuser)
-
+        self.client.login(username='johnlennon', password='shikamaru')
+        # Check home page content
         response = self.client.get(reverse('home'))
         self.assertContains(response, "You are logged in as the following user.", 1)
         self.assertContains(response, "Username:", 1)
+        self.assertContains(response, "johnlennon", 1)
         self.assertContains(response, "Position:", 1)
+        self.assertContains(response, "songwriter", 1)
         self.assertContains(response, "Email:", 1)
+        self.assertContains(response, "john@lennon.com", 1)
         self.assertContains(response, "Date registered:", 1)
         self.assertContains(response, "Last logged in:", 1)
 
