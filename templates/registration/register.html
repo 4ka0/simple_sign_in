@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Sign Up{% endblock title %}
+
+{% block content %}
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-row my-2">
+        {{ form.username|as_crispy_field }}
+      </div>
+      <div class="form-row my-2">
+        {{ form.first_name|as_crispy_field }}
+      </div>
+      <div class="form-row my-2">
+        {{ form.last_name|as_crispy_field }}
+      </div>
+      <div class="form-row my-2">
+        {{ form.position|as_crispy_field }}
+      </div>
+      <div class="form-row my-2">
+        {{ form.email|as_crispy_field }}
+      </div>
+      <div class="form-row my-2">
+        {{ form.password1|as_crispy_field }}
+      </div>
+      <div class="form-row my-2">
+        {{ form.password2|as_crispy_field }}
+      </div>
+      <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+
+    <!-- Cancel link -->
+    <div class="mt-3">
+      <a href="{% url 'home' %}">Cancel</a>
+    </div>
+
+{% endblock content %}
