@@ -6,10 +6,9 @@ from .forms import CustomUserCreationForm, CustomUserUpdateForm
 
 
 class TestUser(TestCase):
-
     def test_user_creation(self):
         testuser = get_user_model().objects.create_user(
-            username="testuser",
+            username="testuser1",
             first_name="Test",
             last_name="User",
             position="Tester",
@@ -23,7 +22,7 @@ class TestUser(TestCase):
         self.assertEqual(testuser.pk, 1)
         self.assertNotEqual(testuser.pk, 2)
 
-        self.assertEqual(testuser.username, "testuser")
+        self.assertEqual(testuser.username, "testuser1")
         self.assertNotEqual(testuser.username, "")
 
         self.assertEqual(testuser.email, "testuser@email.com")
@@ -44,7 +43,6 @@ class TestUser(TestCase):
 
 
 class HomePageTests(TestCase):
-
     def test_home_page_by_url(self):
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
@@ -67,11 +65,11 @@ class HomePageTests(TestCase):
             first_name="John",
             last_name="Lennon",
             email="john@lennon.com",
-            password="shikamaru",
+            password="password",
             position="songwriter",
         )
 
-        self.client.login(username="johnlennon", password="shikamaru")
+        self.client.login(username="johnlennon", password="password")
 
         response = self.client.get(reverse("home"))
         self.assertContains(
@@ -104,7 +102,6 @@ class HomePageTests(TestCase):
 
 
 class RegistrationPageTests(TestCase):
-
     def test_register_page_by_url(self):
         response = self.client.get("/accounts/register/")
         self.assertEqual(response.status_code, 200)
@@ -182,21 +179,27 @@ class RegistrationPageTests(TestCase):
 
         # Test partially completed form
         testuser2 = CustomUserCreationForm(
-            {
-                "username": "testuser",
-                "email": "testuser@email.com"
-            }
+            {"username": "testuser", "email": "testuser@email.com"}
         )
-        self.assertEqual(testuser2.errors['first_name'], ['This field is required.'])
-        self.assertEqual(testuser2.errors['last_name'], ['This field is required.'])
-        self.assertEqual(testuser2.errors['position'], ['This field is required.'])
-        self.assertEqual(testuser2.errors['password1'], ['This field is required.'])
-        self.assertEqual(testuser2.errors['password2'], ['This field is required.'])
+        self.assertEqual(
+            testuser2.errors["first_name"], ["This field is required."]
+        )
+        self.assertEqual(
+            testuser2.errors["last_name"], ["This field is required."]
+        )
+        self.assertEqual(
+            testuser2.errors["position"], ["This field is required."]
+        )
+        self.assertEqual(
+            testuser2.errors["password1"], ["This field is required."]
+        )
+        self.assertEqual(
+            testuser2.errors["password2"], ["This field is required."]
+        )
         self.assertFalse(testuser2.is_valid())
 
 
 class UserUpdatePageTests(TestCase):
-
     def setUp(self):
         get_user_model().objects.create_user(
             username="testuser",
@@ -224,7 +227,7 @@ class UserUpdatePageTests(TestCase):
         self.assertTemplateUsed(response, "registration/user_update_form.html")
         self.assertTemplateNotUsed(response, "registration/login.html")
 
-    def test_complete_registration_form(self):
+    def test_complete_update_form(self):
 
         newuser = CustomUserUpdateForm(
             {
@@ -232,7 +235,7 @@ class UserUpdatePageTests(TestCase):
                 "email": "newuser@email.com",
                 "first_name": "New",
                 "last_name": "User",
-                "position": "Tester"
+                "position": "Tester",
             }
         )
 
@@ -259,15 +262,15 @@ class UserUpdatePageTests(TestCase):
             ["First name", "New"],
             ["Last name", "User"],
             ["Position", "Tester"],
-            ["Email", "newuser@email.com"]
+            ["Email", "newuser@email.com"],
         ]
 
         self.assertEqual(form_output, expected_output)
 
-    def test_incomplete_registration_form(self):
+    def test_incomplete_update_form(self):
 
         # Test empty form
-        testuser1 = CustomUserCreationForm()
+        testuser1 = CustomUserUpdateForm()
         self.assertFalse(testuser1.is_bound)
         self.assertEqual(testuser1.errors, {})
         self.assertFalse(testuser1.is_valid())
@@ -275,15 +278,16 @@ class UserUpdatePageTests(TestCase):
             testuser1.cleaned_data
 
         # Test partially completed form
-        testuser2 = CustomUserCreationForm(
-            {
-                "username": "testuser",
-                "email": "testuser@email.com"
-            }
+        testuser2 = CustomUserUpdateForm(
+            {"username": "testuser2", "email": "testuser2@email.com"}
         )
-        self.assertEqual(testuser2.errors['first_name'], ['This field is required.'])
-        self.assertEqual(testuser2.errors['last_name'], ['This field is required.'])
-        self.assertEqual(testuser2.errors['position'], ['This field is required.'])
-        self.assertEqual(testuser2.errors['password1'], ['This field is required.'])
-        self.assertEqual(testuser2.errors['password2'], ['This field is required.'])
+        self.assertEqual(
+            testuser2.errors["first_name"], ["This field is required."]
+        )
+        self.assertEqual(
+            testuser2.errors["last_name"], ["This field is required."]
+        )
+        self.assertEqual(
+            testuser2.errors["position"], ["This field is required."]
+        )
         self.assertFalse(testuser2.is_valid())

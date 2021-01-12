@@ -6,5 +6,7 @@ from .views import CustomUserUpdateView
 
 urlpatterns = [
     path("register/", RegisterView.as_view(), name="register"),
-    path( "<int:pk>/update/", CustomUserUpdateView.as_view(), name="user_update"),
+    path(
+        "<int:pk>/update/", CustomUserUpdateView.as_view(), name="user_update"
+    ),
 ]
