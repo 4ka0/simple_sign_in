@@ -6,9 +6,8 @@ from .forms import CustomUserCreationForm, CustomUserUpdateForm
 
 
 class TestUser(TestCase):
-    
-    def test_user_creation(self):
 
+    def test_user_creation(self):
         testuser = get_user_model().objects.create_user(
             username="testuser",
             first_name="Test",
@@ -20,6 +19,9 @@ class TestUser(TestCase):
         self.assertEqual(get_user_model().objects.all().count(), 1)
         self.assertNotEqual(get_user_model().objects.all().count(), 0)
         self.assertNotEqual(get_user_model().objects.all().count(), 2)
+
+        self.assertEqual(testuser.pk, 1)
+        self.assertNotEqual(testuser.pk, 2)
 
         self.assertEqual(testuser.username, "testuser")
         self.assertNotEqual(testuser.username, "")
@@ -42,6 +44,7 @@ class TestUser(TestCase):
 
 
 class HomePageTests(TestCase):
+
     def test_home_page_by_url(self):
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
@@ -58,7 +61,7 @@ class HomePageTests(TestCase):
         self.assertTemplateNotUsed(response, "login.html")
 
     def test_home_page_display_when_user_signed_in(self):
-        # Create user and sign in
+
         self.user = get_user_model().objects.create_user(
             username="johnlennon",
             first_name="John",
@@ -67,8 +70,9 @@ class HomePageTests(TestCase):
             password="shikamaru",
             position="songwriter",
         )
+
         self.client.login(username="johnlennon", password="shikamaru")
-        # Check home page content
+
         response = self.client.get(reverse("home"))
         self.assertContains(
             response, "You are logged in as the following user.", 1
@@ -100,6 +104,7 @@ class HomePageTests(TestCase):
 
 
 class RegistrationPageTests(TestCase):
+
     def test_register_page_by_url(self):
         response = self.client.get("/accounts/register/")
         self.assertEqual(response.status_code, 200)
@@ -115,8 +120,8 @@ class RegistrationPageTests(TestCase):
         self.assertTemplateUsed(response, "registration/register.html")
         self.assertTemplateNotUsed(response, "registration/login.html")
 
-    def test_registration_form(self):
-        # Create new user using custom form
+    def test_complete_registration_form(self):
+
         testuser = CustomUserCreationForm(
             {
                 "username": "testuser",
@@ -128,7 +133,8 @@ class RegistrationPageTests(TestCase):
                 "password2": "testpassword",
             }
         )
-        # Test user creation form
+
+        # Check errors and cleaned data
         self.assertTrue(testuser.is_bound)
         self.assertTrue(testuser.is_valid())
         self.assertEqual(testuser.errors, {})
@@ -140,3 +146,144 @@ class RegistrationPageTests(TestCase):
         self.assertEqual(testuser.cleaned_data["position"], "Tester")
         self.assertEqual(testuser.cleaned_data["password1"], "testpassword")
         self.assertEqual(testuser.cleaned_data["password2"], "testpassword")
+
+        # Check bound data
+        form_output = []
+
+        for boundfield in testuser:
+            form_output.append([boundfield.label, boundfield.data])
+
+        expected_output = [
+            ["Username", "testuser"],
+            ["First name", "Test"],
+            ["Last name", "User"],
+            ["Position", "Tester"],
+            ["Email", "testuser@email.com"],
+            ["Password", "testpassword"],
+            ["Password confirmation", "testpassword"],
+        ]
+
+        self.assertEqual(form_output, expected_output)
+
+    def test_incomplete_registration_form(self):
+        """
+        If no values are passed to the Form's __init__(), the Form should be
+        considered unbound and no validation should be carried out. Form.errors
+        should be an empty dictionary but Form.is_valid() should return False.
+        """
+
+        # Test empty form
+        testuser1 = CustomUserCreationForm()
+        self.assertFalse(testuser1.is_bound)
+        self.assertEqual(testuser1.errors, {})
+        self.assertFalse(testuser1.is_valid())
+        with self.assertRaises(AttributeError):
+            testuser1.cleaned_data
+
+        # Test partially completed form
+        testuser2 = CustomUserCreationForm(
+            {
+                "username": "testuser",
+                "email": "testuser@email.com"
+            }
+        )
+        self.assertEqual(testuser2.errors['first_name'], ['This field is required.'])
+        self.assertEqual(testuser2.errors['last_name'], ['This field is required.'])
+        self.assertEqual(testuser2.errors['position'], ['This field is required.'])
+        self.assertEqual(testuser2.errors['password1'], ['This field is required.'])
+        self.assertEqual(testuser2.errors['password2'], ['This field is required.'])
+        self.assertFalse(testuser2.is_valid())
+
+
+class UserUpdatePageTests(TestCase):
+
+    def setUp(self):
+        get_user_model().objects.create_user(
+            username="testuser",
+            first_name="Test",
+            last_name="User",
+            position="Tester",
+            email="testuser@email.com",
+        )
+
+    def test_update_page_by_url(self):
+        testuser = get_user_model().objects.get(username="testuser")
+        response = self.client.get(f"/accounts/{testuser.pk}/update/")
+        self.assertEqual(response.status_code, 200)
+        self.assertNotEqual(response.status_code, 400)
+
+    def test_register_page_by_name(self):
+        testuser = get_user_model().objects.get(username="testuser")
+        response = self.client.get(reverse("user_update", args=[testuser.pk]))
+        self.assertEqual(response.status_code, 200)
+        self.assertNotEqual(response.status_code, 400)
+
+    def test_update_page_uses_correct_template(self):
+        testuser = get_user_model().objects.get(username="testuser")
+        response = self.client.get(reverse("user_update", args=[testuser.pk]))
+        self.assertTemplateUsed(response, "registration/user_update_form.html")
+        self.assertTemplateNotUsed(response, "registration/login.html")
+
+    def test_complete_registration_form(self):
+
+        newuser = CustomUserUpdateForm(
+            {
+                "username": "newuser",
+                "email": "newuser@email.com",
+                "first_name": "New",
+                "last_name": "User",
+                "position": "Tester"
+            }
+        )
+
+        # Check errors and cleaned data
+        self.assertTrue(newuser.is_bound)
+        self.assertTrue(newuser.is_valid())
+        self.assertEqual(newuser.errors, {})
+        self.assertEqual(newuser.errors.as_text(), "")
+
+        self.assertEqual(newuser.cleaned_data["username"], "newuser")
+        self.assertEqual(newuser.cleaned_data["email"], "newuser@email.com")
+        self.assertEqual(newuser.cleaned_data["first_name"], "New")
+        self.assertEqual(newuser.cleaned_data["last_name"], "User")
+        self.assertEqual(newuser.cleaned_data["position"], "Tester")
+
+        # Check bound data
+        form_output = []
+
+        for boundfield in newuser:
+            form_output.append([boundfield.label, boundfield.data])
+
+        expected_output = [
+            ["Username", "newuser"],
+            ["First name", "New"],
+            ["Last name", "User"],
+            ["Position", "Tester"],
+            ["Email", "newuser@email.com"]
+        ]
+
+        self.assertEqual(form_output, expected_output)
+
+    def test_incomplete_registration_form(self):
+
+        # Test empty form
+        testuser1 = CustomUserCreationForm()
+        self.assertFalse(testuser1.is_bound)
+        self.assertEqual(testuser1.errors, {})
+        self.assertFalse(testuser1.is_valid())
+        with self.assertRaises(AttributeError):
+            testuser1.cleaned_data
+
+        # Test partially completed form
+        testuser2 = CustomUserCreationForm(
+            {
+                "username": "testuser",
+                "email": "testuser@email.com"
+            }
+        )
+        self.assertEqual(testuser2.errors['first_name'], ['This field is required.'])
+        self.assertEqual(testuser2.errors['last_name'], ['This field is required.'])
+        self.assertEqual(testuser2.errors['position'], ['This field is required.'])
+        self.assertEqual(testuser2.errors['password1'], ['This field is required.'])
+        self.assertEqual(testuser2.errors['password2'], ['This field is required.'])
+        self.assertFalse(testuser2.is_valid())
