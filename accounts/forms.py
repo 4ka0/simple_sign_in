@@ -15,11 +15,11 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm):
         model = CustomUser
         fields = UserCreationForm.Meta.fields + (
-            'username',
-            'first_name',
-            'last_name',
-            'position',
-            'email',
+            "username",
+            "first_name",
+            "last_name",
+            "position",
+            "email",
         )
 
 
@@ -27,9 +27,16 @@ class CustomUserChangeForm(UserChangeForm):
     """
     Used for the user to change his/her password.
     """
+
     class Meta:
         model = CustomUser
-        fields = ('username', 'first_name', 'last_name', 'position', 'email',)
+        fields = (
+            "username",
+            "first_name",
+            "last_name",
+            "position",
+            "email",
+        )
 
 
 class CustomUserUpdateForm(ModelForm):
@@ -44,4 +51,10 @@ class CustomUserUpdateForm(ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ('username', 'first_name', 'last_name', 'position', 'email',)
+        fields = (
+            "username",
+            "first_name",
+            "last_name",
+            "position",
+            "email",
+        )
