@@ -45,7 +45,7 @@ class CustomUserModelTest(TestCase):
         max_length = user._meta.get_field('last_name').max_length
         self.assertEqual(max_length, 150)
 
-    def test_user_instatiation(self):
+    def test_object_instatiation(self):
         user = CustomUser.objects.get(id=1)
         self.assertEqual(get_user_model().objects.all().count(), 1)
         self.assertEqual(user.username, "testuser")
