@@ -6,22 +6,20 @@ from accounts.models import CustomUser
 
 
 class TestRegisterView(TestCase):
-
     def test_view_url_exists_at_desired_location(self):
-        response = self.client.get('/accounts/register/')
+        response = self.client.get("/accounts/register/")
         self.assertEqual(response.status_code, 200)
 
     def test_view_url_accessible_by_name(self):
-        response = self.client.get(reverse('register'))
+        response = self.client.get(reverse("register"))
         self.assertEqual(response.status_code, 200)
 
     def test_view_uses_correct_template(self):
-        response = self.client.get(reverse('register'))
-        self.assertTemplateUsed(response, 'registration/register.html')
+        response = self.client.get(reverse("register"))
+        self.assertTemplateUsed(response, "registration/register.html")
 
 
 class TestCustomUserUpdateView(TestCase):
-
     @classmethod
     def setUpTestData(cls):
         CustomUser.objects.create(
@@ -29,27 +27,26 @@ class TestCustomUserUpdateView(TestCase):
             first_name="Test",
             last_name="User",
             position="Tester",
-            email="testuser@email.com"
+            email="testuser@email.com",
         )
 
     def test_view_url_exists_at_desired_location(self):
         testuser = CustomUser.objects.get(id=1)
-        response = self.client.get(f'/accounts/{testuser.id}/update/')
+        response = self.client.get(f"/accounts/{testuser.id}/update/")
         self.assertEqual(response.status_code, 200)
 
     def test_view_url_accessible_by_name(self):
         testuser = CustomUser.objects.get(id=1)
-        response = self.client.get(reverse('user_update', args=[testuser.id]))
+        response = self.client.get(reverse("user_update", args=[testuser.id]))
         self.assertEqual(response.status_code, 200)
 
     def test_view_uses_correct_template(self):
         testuser = CustomUser.objects.get(id=1)
-        response = self.client.get(reverse('user_update', args=[testuser.id]))
-        self.assertTemplateUsed(response, 'registration/user_update_form.html')
+        response = self.client.get(reverse("user_update", args=[testuser.id]))
+        self.assertTemplateUsed(response, "registration/user_update_form.html")
 
 
 class TestHomePageContent(TestCase):
-
     def test_home_page_content_when_user_signed_in(self):
 
         testuser = CustomUser.objects.create(
@@ -57,9 +54,9 @@ class TestHomePageContent(TestCase):
             first_name="John",
             last_name="Lennon",
             email="john@lennon.com",
-            position="Songwriter"
+            position="Songwriter",
         )
-        testuser.set_password('wibble1234')
+        testuser.set_password("wibble1234")
         testuser.save()
 
         login = self.client.login(username="johnlennon", password="wibble1234")
