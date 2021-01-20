@@ -10,6 +10,7 @@ django = "*"
 django-crispy-forms = "*"
 coverage = "*"
 environs = {extras = ["django"],version = "*"}
+django-ses = "*"
 
 [requires]
 python_version = "3.7"
