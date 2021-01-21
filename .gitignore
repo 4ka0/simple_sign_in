@@ -1,7 +1,8 @@
-.env
+htmlcov/
 __pycache__/
 db.sqlite3
 .DS_Store
 .vscode/
 .coverage
-htmlcov/
+.env
+.pem
