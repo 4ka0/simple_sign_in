@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 from environs import Env
@@ -32,7 +33,12 @@ SECRET_KEY = env.str("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default=False)
 
-ALLOWED_HOSTS = ["testserver", "127.0.0.1"]
+ALLOWED_HOSTS = [
+    "simple-sign-in.app",
+    "www.simple-sign-in.app",
+    "54.166.103.217",
+    "localhost",
+]
 
 
 # Application definition
@@ -84,7 +90,16 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {"default": env.dj_db_url("DATABASE_URL")}
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "simple_sign_in",
+        "USER": "admin",
+        "PASSWORD": "fish1234",
+        "HOST": "localhost",
+        "PORT": "",
+    }
+}
 
 
 # Password validation
@@ -124,6 +139,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
