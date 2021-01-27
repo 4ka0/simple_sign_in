@@ -1,7 +1,7 @@
 # Simple Sign In
 A simple Django app for handling user sign in, sign out, register, password change, and password reset operations.
 
-Deployed as an AWS EC2 instance using Nginx, Gunicorn, and PostgreSQL on Ubuntu 20.04, also with AWS SES handling email for user password resets.
+Deployed as an AWS EC2 instance using Nginx, Gunicorn, and PostgreSQL on Ubuntu 20.04, also with AWS SES handling email for user password resets. Used Certbot (Let’s Encrypt) for SSL certification.
 
 [Live demo](https://www.simple-sign-in.app)
 
@@ -12,6 +12,7 @@ Deployed as an AWS EC2 instance using Nginx, Gunicorn, and PostgreSQL on Ubuntu 
 * PostgreSQL
 * Gunicorn
 * Nginx
+* Certbot (Let’s Encrypt)
 * AWS EC2
 * AWS SES
 * Visual Studio Code 1.52.1
