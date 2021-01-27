@@ -1,6 +1,6 @@
 htmlcov/
 __pycache__/
-env/
+venv/
 db.sqlite3
 .DS_Store
 .vscode/
