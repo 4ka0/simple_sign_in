@@ -19,8 +19,8 @@ Deployed as an AWS EC2 instance using Nginx, Gunicorn, and PostgreSQL on Ubuntu 
 
 ### Screenshots:
 
-![alt text](readme_screenshot_1.png "Article list screenshot")</br>
+![alt text](readme_screenshot_1.png)</br>
 
-![alt text](readme_screenshot_2.png "Article detail screenshot")</br>
+![alt text](readme_screenshot_2.png)</br>
 
-![alt text](readme_screenshot_2.png "Article detail screenshot")
+![alt text](readme_screenshot_2.png)
