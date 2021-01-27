@@ -33,13 +33,7 @@ SECRET_KEY = env.str("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default=False)
 
-ALLOWED_HOSTS = [
-    "simple-sign-in.app",
-    "www.simple-sign-in.app",
-    "54.166.103.217",
-    "localhost",
-]
-
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 # Application definition
 
@@ -93,9 +87,9 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "simple_sign_in",
-        "USER": "admin",
-        "PASSWORD": "fish1234",
+        "NAME": env.str("DB_NAME"),
+        "USER": env.str("DB_USER"),
+        "PASSWORD": env.str("DB_PASSWORD"),
         "HOST": "localhost",
         "PORT": "",
     }
@@ -148,8 +142,11 @@ AUTH_USER_MODEL = "accounts.CustomUser"
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
 
-# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 EMAIL_BACKEND = "django_ses.SESBackend"
-DEFAULT_FROM_EMAIL = "jonjlee.dev@gmail.com"
+DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL")
+
 AWS_ACCESS_KEY_ID = env.str("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = env.str("AWS_SECRET_ACCESS_KEY")
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
