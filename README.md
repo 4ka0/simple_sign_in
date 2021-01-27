@@ -3,6 +3,8 @@ A self-study project focusing on user sign-in functionality. Basically a simple 
 
 Deployed as an AWS EC2 instance using Nginx, Gunicorn, and PostgreSQL on Ubuntu 20.04. Used AWS SES to deliver email for user password resets and Certbot (Let’s Encrypt) for SSL certification.
 
+Possible improvements: Implement social authentication and optimise for mobile devices.
+
 [Live demo](https://www.simple-sign-in.app)
 
 ### Built using:
