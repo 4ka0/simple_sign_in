@@ -15,7 +15,7 @@ Possible improvements: Implement social authentication, allow users to download 
 * Django 3.1.5
 * PostgreSQL
 * Gunicorn
-* Nginx
+* Nginx 1.18.0
 * Ubuntu 20.04
 * Certbot (Let’s Encrypt)
 * AWS EC2
