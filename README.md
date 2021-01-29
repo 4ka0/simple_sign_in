@@ -13,8 +13,8 @@ Possible improvements: Implement social authentication, allow users to download 
 
 * Python 3.7.6
 * Django 3.1.5
-* PostgreSQL
-* Gunicorn
+* PostgreSQL 12.5
+* Gunicorn 20.0.4
 * Nginx 1.18.0
 * Ubuntu 20.04
 * Certbot (Let’s Encrypt)
