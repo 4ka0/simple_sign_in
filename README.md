@@ -3,7 +3,7 @@ A self-study project to satisfy my own curiosity regarding user sign-in function
 
 The app itself is essentially a simple Django app for handling user sign-in, sign-out, register, password change, and password reset operations. AWS SES is used to deliver email for user password resets.
 
-The app is deployed as an AWS EC2 instance using Nginx, Gunicorn, and PostgreSQL on a Ubuntu AMI, as well as Certbot (Let’s Encrypt) for SSL certification.
+The app is deployed as an AWS EC2 instance using Nginx, Gunicorn, and PostgreSQL on a Ubuntu AMI, and also uses Certbot (Let’s Encrypt) for SSL certification.
 
 Possible improvements: Implement social authentication, allow users to download personal data and delete their accounts, and optimise for mobile devices.
 
