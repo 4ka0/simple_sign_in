@@ -1,7 +1,9 @@
 # Simple Sign In
-A self-study project focusing on user sign-in functionality. Basically a simple Django app for handling user sign-in, sign-out, register, password change, and password reset operations.
+A self-study project to satisfy my own curiosity regarding user sign-in functionality in Django and how to deploy an app as an AWS EC2 instance.
 
-Deployed as an AWS EC2 instance using Nginx, Gunicorn, and PostgreSQL on Ubuntu 20.04. Used AWS SES to deliver email for user password resets and Certbot (Let’s Encrypt) for SSL certification.
+The app itself is essentially a simple Django app for handling user sign-in, sign-out, register, password change, and password reset operations. AWS SES is used to deliver email for user password resets.
+
+The app is deployed as an AWS EC2 instance using Nginx, Gunicorn, and PostgreSQL on a Ubuntu AMI, as well as Certbot (Let’s Encrypt) for SSL certification.
 
 Possible improvements: Implement social authentication, allow users to download personal data and delete their accounts, and optimise for mobile devices.
 
@@ -14,6 +16,7 @@ Possible improvements: Implement social authentication, allow users to download 
 * PostgreSQL
 * Gunicorn
 * Nginx
+* Ubuntu 20.04
 * Certbot (Let’s Encrypt)
 * AWS EC2
 * AWS SES
