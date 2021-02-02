@@ -26,17 +26,17 @@ Possible improvements: Implement social authentication, allow users to download 
 
 ### Screenshots:
 
-Signin:
+Signin:</br>
 <img src="readme_screenshot_1.png" width="600"></br>
 
-User details:
+User details:</br>
 <img src="readme_screenshot_2.png" width="600"></br>
 
-Update user details:
+Update user details:</br>
 <img src="readme_screenshot_3.png" width="600"></br>
 
-Change password:
+Change password:</br>
 <img src="readme_screenshot_4.png" width="600"></br>
 
-Reset password:
+Reset password:</br>
 <img src="readme_screenshot_5.png" width="600">
