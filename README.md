@@ -26,7 +26,7 @@ Possible improvements: Implement social authentication, allow users to download 
 
 ### Screenshots:
 
-Signin:</br>
+Sign-in:</br>
 <img src="readme_screenshot_1.png" width="600"></br>
 
 User details:</br>
