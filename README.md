@@ -5,7 +5,7 @@ The app itself is essentially a simple Django app for handling user sign-in, sig
 
 The app is deployed as an AWS EC2 instance using Nginx, Gunicorn, and PostgreSQL on a Ubuntu AMI, and also uses Certbot (Let’s Encrypt) for SSL certification.
 
-Possible improvements: Implement social authentication, allow users to download personal data and delete their accounts, and optimise for mobile devices.
+Possible improvements: Implement social authentication and allow users to upload profile images, download personal data, and delete their accounts.
 
 [Live demo](https://www.simple-sign-in.app)
 
