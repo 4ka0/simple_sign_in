@@ -8,34 +8,36 @@
 
       <p>You are logged in as the following user.</p>
 
-      <table class="table table-bordered">
-        <tbody>
-          <tr>
-            <th scope="row">Username:</th>
-            <td>{{ user.username }}</td>
-          </tr>
-          <tr>
-            <th scope="row">Name:</th>
-            <td>{{ user.first_name }} {{ user.last_name }}</td>
-          </tr>
-          <tr>
-            <th scope="row">Position:</th>
-            <td>{{ user.position }}</td>
-          </tr>
-          <tr>
-            <th scope="row">Email:</th>
-            <td>{{ user.email }}</td>
-          </tr>
-          <tr>
-            <th scope="row">Date registered:</th>
-            <td>{{ user.date_joined}}</td>
-          </tr>
-          <tr>
-            <th scope="row">Last logged in:</th>
-            <td>{{ user.last_login }}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th scope="row">Username:</th>
+              <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Name:</th>
+              <td>{{ user.first_name }} {{ user.last_name }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Position:</th>
+              <td>{{ user.position }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Email:</th>
+              <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Date registered:</th>
+              <td>{{ user.date_joined}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Last logged in:</th>
+              <td>{{ user.last_login }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <a href="{% url 'user_update' user.id %}" class="card-link">Update user details</a>
       <a href="{% url 'password_change'%}" class="card-link">Change password</a>
