@@ -16,7 +16,7 @@ Possible improvements: Implement social authentication and allow users to upload
 * Bootstrap 4
 * PostgreSQL 12.5
 * Gunicorn 20.0.4
-* Nginx 1.18.0
+* NGINX 1.18.0
 * Ubuntu 20.04
 * Certbot (Let’s Encrypt)
 * AWS EC2
