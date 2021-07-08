@@ -7,8 +7,6 @@ The app is deployed as an AWS EC2 instance using Nginx, Gunicorn, and PostgreSQL
 
 Possible improvements: Implement social authentication and allow users to upload profile images, download personal data, and delete their accounts.
 
-[Live demo](https://www.simple-sign-in.app)
-
 ### Built using:
 
 * Python 3.7.6
